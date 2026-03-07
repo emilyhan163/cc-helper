@@ -92,3 +92,15 @@ npm install -g @anthropic-ai/claude-code@v2.1.71
 ## License
 
 AGPL-3.0 - see [LICENSE](./LICENSE)
+
+## Security
+
+### Reporting Vulnerabilities
+
+If you discover a security vulnerability in cc-helper, please report it responsibly:
+
+1. **Do not** open a public issue
+2. Send an email to the maintainer with details
+3. Allow reasonable time for the issue to be addressed before public disclosure
+
+We take security seriously and will respond to reports as quickly as possible.
