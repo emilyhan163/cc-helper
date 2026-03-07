@@ -10,15 +10,27 @@
 npm install -g @anthropic-ai/claude-code@v2.1.71
 ```
 
+## Installation
+
+```bash
+# Using npx (no install)
+npx @unitsvc/cc-helper enable
+
+# Or install globally
+npm install -g @unitsvc/cc-helper
+cc-helper enable
+```
+
 ## Usage
 
 ### Command
 
-| Command             | Description            |
-| ------------------- | ---------------------- |
-| `cc-helper enable`  | Enable `/loop` feature |
-| `cc-helper disable` | Restore original       |
-| `cc-helper status`  | Check current status   |
+| Command               | Description             |
+| --------------------- | ----------------------- |
+| `cc-helper enable`    | Enable `/loop` feature  |
+| `cc-helper disable`   | Restore original        |
+| `cc-helper status`    | Check current status    |
+| `cc-helper uninstall` | Uninstall (clean cache) |
 
 ## Sponsors
 
