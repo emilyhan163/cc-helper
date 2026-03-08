@@ -1,42 +1,69 @@
 # cc-helper
 
-> Enable/disable the `/loop` feature in Claude Code CLI
+[![npm version](https://img.shields.io/npm/v/@unitsvc/cc-helper.svg)](https://www.npmjs.com/package/@unitsvc/cc-helper)
+[![License](https://img.shields.io/badge/License-AGPL%203.0-blue.svg)](https://github.com/next-bin/cc-helper/blob/master/LICENSE)
+[![Node](https://img.shields.io/badge/Node-%3E%3D14.0.0-green.svg)](https://nodejs.org)
+
+**English** | [**简体中文**](./README-zh.md)
+
+> ⚡ Enable the `/loop` feature in Claude Code CLI with one command
 
 ## Requirements
 
+- Node.js >= 14.0.0
 - Claude Code v2.1.71+
 
 ```bash
 npm install -g @anthropic-ai/claude-code@v2.1.71
 ```
 
-## Installation
-
-```bash
-# Using npx (no install)
-npx @unitsvc/cc-helper enable
-
-# Or install globally
-npm install -g @unitsvc/cc-helper
-cc-helper enable
-```
-
 ## Usage
 
-### Command
+```bash
+# Enable /loop feature
+npx @unitsvc/cc-helper enable
 
-| Command               | Description             |
-| --------------------- | ----------------------- |
-| `cc-helper enable`    | Enable `/loop` feature  |
-| `cc-helper disable`   | Restore original        |
-| `cc-helper status`    | Check current status    |
-| `cc-helper uninstall` | Uninstall (clean cache) |
+# Check status
+npx @unitsvc/cc-helper status
+
+# Disable /loop feature (restore original)
+npx @unitsvc/cc-helper disable
+```
+
+### Proxy Support
+
+If download fails, use `--proxy` flag:
+
+```bash
+# Use default proxy (https://edgeone.gh-proxy.org)
+npx @unitsvc/cc-helper --proxy enable
+
+# Use custom proxy
+npx @unitsvc/cc-helper --proxy https://your-proxy.com enable
+```
+
+### Commands
+
+| Command   | Description            |
+| --------- | ---------------------- |
+| `enable`  | Enable `/loop` feature |
+| `disable` | Restore original       |
+| `status`  | Check current status   |
 
 ## Sponsors
 
-🚀 **GLM Coding Plan**
-
-👉 [Enjoy full support for Claude Code, Cline, and 20+ top coding tools — starting at just $10/month. Subscribe now and grab the limited-time deal!](https://z.ai/subscribe?ic=1YVKN4IRCQ)
+<table>
+<tr>
+<td width="60" valign="middle">
+<img src="https://img.shields.io/badge/🚀-GLM-blue?style=for-the-badge" alt="GLM"/>
+</td>
+<td valign="middle">
+<b>GLM Coding Plan</b><br/>
+<sub>Full support for <b>Claude Code</b>, <b>Cline</b>, and <b>20+ top coding tools</b> — starting at just <b>$10/month</b></sub><br/>
+<a href="https://z.ai/subscribe?ic=1YVKN4IRCQ"><b>👉 Subscribe now — limited-time deal!</b></a>
+</td>
+</tr>
+</table>
 
 ---
 
@@ -92,6 +119,8 @@ cancel the deploy check job       # Cancel by description or ID
 - Enable `/loop` with one command
 - Easy restore functionality
 - Automatic backup
+- Zero runtime dependencies
+- Cross-platform support
 
 ### Examples
 
@@ -107,7 +136,7 @@ Example of executing a loop command:
 
 - macOS (amd64, arm64)
 - Linux (amd64, arm64)
-- Windows (amd64)
+- Windows (amd64, arm64)
 
 ## License
 
