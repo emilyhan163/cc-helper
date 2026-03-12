@@ -132,6 +132,16 @@ cancel the deploy check job       # Cancel by description or ID
 /btw why use async/await in this case?
 ```
 
+### Examples
+
+After enabling, use `/btw` in Claude Code:
+
+![btw command example](./docs/images/btw-1.png)
+
+btw execution example:
+
+![btw execution](./docs/images/btw-2.png)
+
 ## Features
 
 - Enable `/loop` and `/btw` with one command

@@ -132,6 +132,16 @@ cancel the deploy check job       # 按描述或 ID 取消
 /btw 为什么这里要用 async/await？
 ```
 
+### 示例
+
+启用后，在 Claude Code 中使用 `/btw` 命令：
+
+![btw 命令示例](./docs/images/btw-1.png)
+
+执行 btw 命令示例：
+
+![btw 执行示例](./docs/images/btw-2.png)
+
 ## 功能特点
 
 - 一键启用 `/loop` 和 `/btw` 功能
