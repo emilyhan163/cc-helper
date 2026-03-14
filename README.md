@@ -6,7 +6,7 @@
 
 **English** | [**简体中文**](./README-zh.md)
 
-> ⚡ Enable hidden features in Claude Code CLI with one command: `/loop`, `/btw`, and `MCPSearch`
+> ⚡ Enable hidden features in Claude Code CLI with one command: `/loop`, `/btw`, `/keybindings`, `/context1m`, and `MCPSearch`
 
 ## Requirements
 
@@ -14,19 +14,21 @@
 - Claude Code v2.1.71+
 
 ```bash
-npm install -g @anthropic-ai/claude-code@v2.1.71
+npm install -g @anthropic-ai/claude-code@v2.1.76
 ```
 
 ## Usage
 
 ```bash
-# Enable default features (/loop, /btw)
+# Enable default features (/loop, /btw, /keybindings)
 npx @unitsvc/cc-helper enable
 
 # Enable specific features
 npx @unitsvc/cc-helper enable loop
 npx @unitsvc/cc-helper enable btw
+npx @unitsvc/cc-helper enable keybindings
 npx @unitsvc/cc-helper enable toolsearch
+npx @unitsvc/cc-helper enable context1m   # or: 1m, 1M
 
 # Check status
 npx @unitsvc/cc-helper status
@@ -37,14 +39,16 @@ npx @unitsvc/cc-helper disable
 
 ### Commands
 
-| Command             | Description                                                       |
-| ------------------- | ----------------------------------------------------------------- |
-| `enable`            | Enable `/loop` and `/btw` features (default, excludes toolsearch) |
-| `enable loop`       | Enable only `/loop` feature                                       |
-| `enable btw`        | Enable only `/btw` feature                                        |
-| `enable toolsearch` | Enable toolsearch feature (requires explicit activation)          |
-| `disable`           | Restore original                                                  |
-| `status`            | Check current status with version requirements                    |
+| Command              | Description                                                          |
+| -------------------- | -------------------------------------------------------------------- |
+| `enable`             | Enable `/loop`, `/btw`, and `/keybindings` features (default)        |
+| `enable loop`        | Enable only `/loop` feature                                          |
+| `enable btw`         | Enable only `/btw` feature                                           |
+| `enable keybindings` | Enable only `/keybindings` feature                                   |
+| `enable toolsearch`  | Enable toolsearch feature (requires explicit activation)             |
+| `enable context1m`   | Enable 1M context window for Claude Opus (v2.1.76+, explicit opt-in) |
+| `disable`            | Restore original                                                     |
+| `status`             | Check current status with version requirements                       |
 
 ### Proxy Support
 
@@ -57,21 +61,6 @@ npx @unitsvc/cc-helper --proxy enable
 # Use custom proxy
 npx @unitsvc/cc-helper --proxy https://your-proxy.com enable
 ```
-
-## Sponsors
-
-<table>
-<tr>
-<td width="60" valign="middle">
-<img src="https://img.shields.io/badge/🚀-GLM-blue?style=for-the-badge" alt="GLM"/>
-</td>
-<td valign="middle">
-<b>GLM Coding Plan</b><br/>
-<sub>Full support for <b>Claude Code</b>, <b>Cline</b>, and <b>20+ top coding tools</b> — starting at just <b>$10/month</b></sub><br/>
-<a href="https://z.ai/subscribe?ic=1YVKN4IRCQ"><b>👉 Subscribe now — limited-time deal!</b></a>
-</td>
-</tr>
-</table>
 
 ---
 
@@ -200,15 +189,73 @@ You can also disable the `MCPSearch` tool specifically using the `disallowedTool
 }
 ```
 
+## What is `/keybindings`?
+
+`/keybindings` enables custom keyboard shortcuts support. Configure your keybindings in `~/.claude/keybindings.json`.
+
+### Configuration
+
+Create or edit `~/.claude/keybindings.json`:
+
+```json
+{
+  "submit": ["ctrl+s"],
+  "interrupt": ["ctrl+c"],
+  "custom_commands": {
+    "ctrl+shift+l": "/loop 5m check status"
+  }
+}
+```
+
+## What is `/context1m`?
+
+`/context1m` enables 1M token context window for Claude Opus models. This allows you to work with much larger codebases and conversations.
+
+### Requirements
+
+- Claude Code v2.1.76 or higher
+- Claude Opus 4+ model
+- May require Pro plan or first-party API
+
+### Usage
+
+```bash
+# Enable 1M context
+npx @unitsvc/cc-helper enable context1m
+
+# Or use aliases
+npx @unitsvc/cc-helper enable 1m
+npx @unitsvc/cc-helper enable 1M
+```
+
+### Extended Thinking Support
+
+When using third-party API proxies, extended thinking (reasoning) capabilities vary by model:
+
+| Model                | Max Thinking Tokens          |
+| -------------------- | ---------------------------- |
+| qwen3.5-plus         | 81,920                       |
+| qwen3-max-2026-01-23 | 81,920                       |
+| kimi-k2.5            | 81,920                       |
+| glm-5                | 32,768                       |
+| glm-4.7              | 32,768                       |
+| MiniMax-M2.5         | 32,768 (thinking + response) |
+| qwen3-coder-next     | Not supported                |
+| qwen3-coder-plus     | Not supported                |
+
 ## Features
 
-- Enable `/loop`, `/btw`, and toolsearch with one command
+- Enable `/loop`, `/btw`, `/keybindings` with one command
+- Optional `/toolsearch` for third-party API proxies
+- Optional `/context1m` for 1M context window (v2.1.76+)
 - Enable specific features individually
 - Easy restore functionality
 - Automatic backup
+- Auto-disable npm deprecation warning
+- Auto-skip onboarding flow
 - Zero runtime dependencies
 - Cross-platform support
-- Version support: 2.1.71, 2.1.72, 2.1.73, 2.1.74
+- Version support: 2.1.71 - 2.1.76+
 
 ### Examples
 

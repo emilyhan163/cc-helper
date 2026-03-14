@@ -6,7 +6,7 @@
 
 [**English**](./README.md) | **简体中文**
 
-> ⚡ 一键启用 Claude Code CLI 的隐藏功能：`/loop`、`/btw` 和 `MCPSearch`
+> ⚡ 一键启用 Claude Code CLI 的隐藏功能：`/loop`、`/btw`、`/keybindings`、`/context1m` 和 `MCPSearch`
 
 ## 环境要求
 
@@ -14,19 +14,21 @@
 - Claude Code v2.1.71+
 
 ```bash
-npm install -g @anthropic-ai/claude-code@v2.1.71
+npm install -g @anthropic-ai/claude-code@v2.1.76
 ```
 
 ## 使用方法
 
 ```bash
-# 启用默认功能（/loop, /btw）
+# 启用默认功能（/loop, /btw, /keybindings）
 npx @unitsvc/cc-helper enable
 
 # 启用特定功能
 npx @unitsvc/cc-helper enable loop
 npx @unitsvc/cc-helper enable btw
+npx @unitsvc/cc-helper enable keybindings
 npx @unitsvc/cc-helper enable toolsearch
+npx @unitsvc/cc-helper enable context1m   # 别名: 1m, 1M
 
 # 查看状态
 npx @unitsvc/cc-helper status
@@ -37,29 +39,16 @@ npx @unitsvc/cc-helper disable
 
 ### 命令说明
 
-| 命令 | 说明 |
-|---------|-------------|
-| `enable` | 启用 `/loop` 和 `/btw` 功能（默认，不包含 toolsearch） |
-| `enable loop` | 仅启用 `/loop` 功能 |
-| `enable btw` | 仅启用 `/btw` 功能 |
-| `enable toolsearch` | 启用 toolsearch 功能（需要显式激活） |
-| `disable` | 恢复原始状态 |
-| `status` | 查看当前状态及版本要求 |
-
-## 赞助
-
-<table>
-<tr>
-<td width="60" valign="middle">
-<img src="https://img.shields.io/badge/🚀-GLM-blue?style=for-the-badge" alt="GLM"/>
-</td>
-<td valign="middle">
-<b>GLM Coding Plan</b><br/>
-<sub>Full support for <b>Claude Code</b>, <b>Cline</b>, and <b>20+ top coding tools</b> — starting at just <b>$10/month</b></sub><br/>
-<a href="https://z.ai/subscribe?ic=1YVKN4IRCQ"><b>👉 Subscribe now — limited-time deal!</b></a>
-</td>
-</tr>
-</table>
+| 命令                 | 说明                                                           |
+| -------------------- | -------------------------------------------------------------- |
+| `enable`             | 启用 `/loop`、`/btw` 和 `/keybindings` 功能（默认）            |
+| `enable loop`        | 仅启用 `/loop` 功能                                            |
+| `enable btw`         | 仅启用 `/btw` 功能                                             |
+| `enable keybindings` | 仅启用 `/keybindings` 功能                                     |
+| `enable toolsearch`  | 启用 toolsearch 功能（需要显式激活）                           |
+| `enable context1m`   | 启用 1M 上下文窗口，用于 Claude Opus（v2.1.76+，需要显式激活） |
+| `disable`            | 恢复原始状态                                                   |
+| `status`             | 查看当前状态及版本要求                                         |
 
 ---
 
@@ -188,15 +177,73 @@ ENABLE_TOOL_SEARCH=true claude
 }
 ```
 
+## 什么是 `/keybindings`？
+
+`/keybindings` 启用自定义键盘快捷键支持。在 `~/.claude/keybindings.json` 中配置您的键绑定。
+
+### 配置方法
+
+创建或编辑 `~/.claude/keybindings.json`：
+
+```json
+{
+  "submit": ["ctrl+s"],
+  "interrupt": ["ctrl+c"],
+  "custom_commands": {
+    "ctrl+shift+l": "/loop 5m check status"
+  }
+}
+```
+
+## 什么是 `/context1m`？
+
+`/context1m` 为 Claude Opus 模型启用 1M token 上下文窗口。这允许您处理更大的代码库和更长的对话。
+
+### 要求
+
+- Claude Code v2.1.76 或更高版本
+- Claude Opus 4+ 模型
+- 可能需要 Pro 计划或官方 API
+
+### 使用方法
+
+```bash
+# 启用 1M 上下文
+npx @unitsvc/cc-helper enable context1m
+
+# 或使用别名
+npx @unitsvc/cc-helper enable 1m
+npx @unitsvc/cc-helper enable 1M
+```
+
+### 扩展思维支持
+
+使用第三方 API 代理时，扩展思维（推理）能力因模型而异：
+
+| 模型                 | 最大思维链长度        |
+| -------------------- | --------------------- |
+| qwen3.5-plus         | 81,920                |
+| qwen3-max-2026-01-23 | 81,920                |
+| kimi-k2.5            | 81,920                |
+| glm-5                | 32,768                |
+| glm-4.7              | 32,768                |
+| MiniMax-M2.5         | 32,768（思维链+回复） |
+| qwen3-coder-next     | 不支持思考模式        |
+| qwen3-coder-plus     | 不支持思考模式        |
+
 ## 功能特点
 
-- 一键启用 `/loop`、`/btw` 功能（toolsearch 需要显式激活）
+- 一键启用 `/loop`、`/btw`、`/keybindings` 功能
+- 可选 `/toolsearch` 用于第三方 API 代理
+- 可选 `/context1m` 用于 1M 上下文窗口（v2.1.76+）
 - 可单独启用特定功能
 - 轻松恢复原始状态
 - 自动备份原文件
+- 自动禁用 npm 弃用警告
+- 自动跳过入门引导流程
 - 零运行时依赖
 - 跨平台支持
-- 支持版本：2.1.71、2.1.72、2.1.73、2.1.74
+- 支持版本：2.1.71 - 2.1.76+
 
 ### 示例
 
