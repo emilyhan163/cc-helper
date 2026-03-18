@@ -17,6 +17,18 @@
 npm install -g @anthropic-ai/claude-code@v2.1.76
 ```
 
+## 安装
+
+```bash
+npm install -g @unitsvc/cc-helper@latest
+```
+
+或直接使用 npx 运行：
+
+```bash
+npx @unitsvc/cc-helper enable
+```
+
 ## 使用方法
 
 ```bash
@@ -244,12 +256,101 @@ npx @unitsvc/cc-helper enable 1M
 | glm-5                | 32,768                  | 202,752              |
 | glm-4.7              | 32,768                  | 202,752              |
 
+## plan 命令 - 配置 Provider
+
+`cc-helper plan` 命令帮助配置 AI Provider，支持 vault 加密存储。
+
+```bash
+# 添加 Provider（自动保存到 vault + settings.json）
+cc-helper plan add -p bailian -k YOUR_API_KEY
+cc-helper plan add -p minimaxi -k YOUR_API_KEY --mcp
+
+# 切换 Provider（自动从 vault 获取密钥）
+cc-helper plan switch -p zai
+
+# 列出已配置的 Provider
+cc-helper plan list
+
+# 导出配置
+cc-helper plan export --all-env -o config.json
+```
+
+**支持的 Provider:**
+
+- `bailian` - (CN) Aliyun
+- `minimaxi` - (CN) MiniMax
+- `glm` - (CN) Zhipu
+- `zai` - (EN) Zhipu
+
+---
+
+## vault 命令 - 密钥管理
+
+安全的密钥存储，加密存储在 `cc-helper.json` 中。
+
+```bash
+# 列出所有密钥
+cc-helper vault list
+
+# 设置密钥
+cc-helper vault set bailian default -k "YOUR_API_KEY"
+
+# 获取并解密密钥
+cc-helper vault get bailian default
+
+# 删除密钥
+cc-helper vault delete bailian default
+```
+
+---
+
+## env 命令 - 环境管理
+
+支持多环境配置（default、work、staging 等）。
+
+```bash
+# 列出环境
+cc-helper env list
+
+# 创建环境
+cc-helper env create work
+
+# 切换环境
+cc-helper env switch work
+```
+
+---
+
+## sync 命令 - 配置同步
+
+将配置导出/导入到 Git 仓库，支持 JWE 加密。
+
+```bash
+# 登录 GitHub
+cc-helper sync login -r https://github.com/user/repo -t ghp_xxx
+
+# 导出到 Git 仓库
+cc-helper sync export
+
+# 导出到文件
+cc-helper sync export --file config.json
+cc-helper sync export --workspace test  # 使用工作区配置
+
+# 导入配置
+cc-helper sync import
+```
+
+---
+
 ## 功能特点
 
 - 一键启用 `/loop`、`/btw`、`/keybindings` 功能
 - 可选 `/toolsearch` 用于第三方 API 代理
 - 可选 `/context1m` 用于 1M 上下文窗口（v2.1.76+）
-- 可单独启用特定功能
+- `plan` 命令支持 vault 加密存储 API 密钥
+- `vault` 命令安全管理密钥
+- `env` 命令支持多环境配置
+- `sync` 命令支持 Git 仓库同步
 - 轻松恢复原始状态
 - 自动备份原文件
 - 自动禁用 npm 弃用警告

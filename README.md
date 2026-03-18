@@ -17,6 +17,18 @@
 npm install -g @anthropic-ai/claude-code@v2.1.76
 ```
 
+## Installation
+
+```bash
+npm install -g @unitsvc/cc-helper@latest
+```
+
+Or use without installation:
+
+```bash
+npx @unitsvc/cc-helper enable
+```
+
 ## Usage
 
 ```bash
@@ -256,11 +268,101 @@ When using third-party API proxies, extended thinking (reasoning) capabilities a
 | glm-5                | 32,768                       | 202,752                 |
 | glm-4.7              | 32,768                       | 202,752                 |
 
+## plan Command - Configure Provider
+
+Configure AI providers with vault-based secret storage.
+
+```bash
+# Add provider (auto-saves to vault + settings.json)
+cc-helper plan add -p bailian -k YOUR_API_KEY
+cc-helper plan add -p minimaxi -k YOUR_API_KEY --mcp
+
+# Switch provider (auto-retrieves key from vault)
+cc-helper plan switch -p zai
+
+# List configured providers
+cc-helper plan list
+
+# Export configuration
+cc-helper plan export --all-env -o config.json
+```
+
+**Supported Providers:**
+
+- `bailian` - (CN) Aliyun
+- `minimaxi` - (CN) MiniMax
+- `glm` - (CN) Zhipu
+- `zai` - (EN) Zhipu
+
+---
+
+## vault Command - Secret Management
+
+Securely store API keys encrypted in `cc-helper.json`.
+
+```bash
+# List all secrets
+cc-helper vault list
+
+# Set a secret
+cc-helper vault set bailian default -k "YOUR_API_KEY"
+
+# Get and decrypt a secret
+cc-helper vault get bailian default
+
+# Delete a secret
+cc-helper vault delete bailian default
+```
+
+---
+
+## env Command - Environment Management
+
+Support multiple environments (default, work, staging, etc.).
+
+```bash
+# List environments
+cc-helper env list
+
+# Create environment
+cc-helper env create work
+
+# Switch environment
+cc-helper env switch work
+```
+
+---
+
+## sync Command - Configuration Sync
+
+Export/import configuration to/from Git repository with JWE encryption.
+
+```bash
+# Login to GitHub
+cc-helper sync login -r https://github.com/user/repo -t ghp_xxx
+
+# Export to Git repository
+cc-helper sync export
+
+# Export to file
+cc-helper sync export --file config.json
+cc-helper sync export --workspace test  # Use workspace config
+
+# Import configuration
+cc-helper sync import
+```
+
+---
+
 ## Features
 
 - Enable `/loop`, `/btw`, `/keybindings` with one command
 - Optional `/toolsearch` for third-party API proxies
 - Optional `/context1m` for 1M context window (v2.1.76+)
+- `plan` command with vault-based API key storage
+- `vault` command for secure secret management
+- `env` command for multi-environment support
+- `sync` command for Git repository sync
 - Enable specific features individually
 - Easy restore functionality
 - Automatic backup
